@@ -24,6 +24,9 @@ abstract class AggregateRoot
         return $events;
     }
 
+    /**
+     * @param DomainEventInterface $event
+     */
     protected function append(DomainEventInterface $event): void
     {
         $this->events[] = $event;

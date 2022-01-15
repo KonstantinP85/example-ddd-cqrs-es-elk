@@ -6,6 +6,7 @@ namespace App\Infrastructure\Repository;
 
 use App\Shared\Domain\Model\DomainEventInterface;
 use App\Shared\Infrastructure\Repository\ElasticSearchRepository;
+use Ramsey\Uuid\Uuid;
 
 class EventRepository extends ElasticSearchRepository
 {
@@ -26,7 +27,7 @@ class EventRepository extends ElasticSearchRepository
     public function save(DomainEventInterface $message): void
     {
         $document = [
-            'id' => rand(1,9000),
+            'uid' => Uuid::uuid4()->toString(),
             'type' => get_class($message),
             'payload' => $message->toArray(),
             'recording_date' => (new \DateTime()),

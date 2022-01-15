@@ -44,17 +44,5 @@ services:
         resource: '../src/Rest'
         tags: [ 'controller.service_arguments' ]
 
-    #App\Shared\Infrastructure\Bus\MessengerCommandBus:
-    #    arguments:
-    #        - '@messenger.bus.command'
-
-    #App\Shared\Infrastructure\Bus\MessengerQueryBus:
-    #    arguments:
-    #        - '@messenger.bus.query'
-
-    #App\Shared\Infrastructure\Bus\MessengerEventBus:
-    #    arguments:
-    #        - '@messenger.bus.event'
-
     App\Shared\Infrastructure\EventSubscriber\DomainEventSubscriber:
         tags: [ { name: 'doctrine.event_subscriber' } ]

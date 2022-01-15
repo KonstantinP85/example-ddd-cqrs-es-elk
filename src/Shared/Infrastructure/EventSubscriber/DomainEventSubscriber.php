@@ -18,6 +18,9 @@ class DomainEventSubscriber implements EventSubscriber
      */
     private array $entities = [];
 
+    /**
+     * @var MessengerEventBus
+     */
     private MessengerEventBus $eventBus;
 
     public function __construct(MessengerEventBus $eventBus)
@@ -25,6 +28,9 @@ class DomainEventSubscriber implements EventSubscriber
         $this->eventBus = $eventBus;
     }
 
+    /**
+     * @return array|string[]
+     */
     public function getSubscribedEvents(): array
     {
         return [
@@ -35,16 +41,25 @@ class DomainEventSubscriber implements EventSubscriber
         ];
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postPersist(LifecycleEventArgs $args): void
     {
         $this->keepAggregateRoots($args);
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postUpdate(LifecycleEventArgs $args): void
     {
         $this->keepAggregateRoots($args);
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postRemove(LifecycleEventArgs $args): void
     {
         $this->keepAggregateRoots($args);
@@ -56,6 +71,7 @@ class DomainEventSubscriber implements EventSubscriber
      */
     public function postFlush(PostFlushEventArgs $args): void
     {
+        print_r($this->entities);
         foreach ($this->entities as $entity) {
             foreach ($entity->popEvents() as $event) {
                 $this->eventBus->handle($event);
