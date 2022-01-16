@@ -45,4 +45,26 @@ class EventRepository extends ElasticSearchRepository
 
         return $this->search($document);
     }
+
+    /**
+     * @param int $id
+     * @param string $entityName
+     * @return array
+     */
+    public function getEventsByEntityId(int $id, string $entityName): array
+    {
+
+        $document = [
+            'query' => [
+                'bool' => [
+                    'must' => [
+                        ['match' => [ 'payload.id' => $id ]],
+                        ['match' => [ 'type' => $entityName ]],
+                    ]
+                ]
+            ]
+        ];
+
+        return $this->search($document);
+    }
 }

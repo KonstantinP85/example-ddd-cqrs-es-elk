@@ -19,10 +19,6 @@ framework:
                 default_middleware: allow_no_handlers
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
             events:
                 dsn: '%env(RABBITMQ_DSN)%'
                 retry_strategy:
@@ -40,5 +36,4 @@ framework:
                             binding_keys: ['#']
 
         routing:
-            # Route your messages to the transports
             'App\Shared\Domain\Model\DomainEventInterface': events

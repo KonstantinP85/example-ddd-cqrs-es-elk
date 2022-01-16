@@ -7,7 +7,7 @@ namespace App\Shared\Application\Query\Event;
 use App\Infrastructure\Repository\EventRepository;
 use App\Shared\Application\Query\QueryHandlerInterface;
 
-class GetEventsHandler implements QueryHandlerInterface
+class GetEventsByEntityIdHandler implements QueryHandlerInterface
 {
     /**
      * @var EventRepository
@@ -23,12 +23,12 @@ class GetEventsHandler implements QueryHandlerInterface
     }
 
     /**
-     * @param GetEventsQuery $query
+     * @param GetEventsByEntityIdQuery $query
      * @return array
      */
-    public function __invoke(GetEventsQuery $query): array
+    public function __invoke(GetEventsByEntityIdQuery $query): array
     {
-        $result = $this->eventRepository->getEvents();
+        $result = $this->eventRepository->getEventsByEntityId($query->getId(), $query->getEntityName());
 
         return $result;
     }
